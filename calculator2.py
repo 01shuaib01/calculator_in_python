@@ -1,10 +1,21 @@
 from tkinter import *
+import getpass
+import pyttsx3
 
 shall = Tk()
 shall.title('Calculator')
 shall.geometry('324x284')
 shall.resizable(0, 0)
-
+print()
+pyttsx3.speak("Hello I am Shuaib")
+pyttsx3.speak("Welcome to my Calculator")
+pyttsx3.speak("Enter your password")
+inpass = getpass.getpass ("Enter your password :")
+apass = "shuaib"
+if inpass!=apass:
+    pyttsx3.speak("Incorrect Password Try Again ")
+    exit()
+pyttsx3.speak("Access Granted")
 
 # btn_click function continuously update the input field whatever you enter a number
 def btn_click(item):

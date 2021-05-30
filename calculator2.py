@@ -4,8 +4,10 @@ import pyttsx3
 
 shall = Tk()
 shall.title('Calculator')
-shall.geometry('324x284')
-shall.resizable(0, 0)
+
+shall.iconbitmap('cal.ico')
+shall.minsize(318, 290)
+shall.maxsize(318,290)
 print()
 pyttsx3.speak("Hello I am Shuaib")
 pyttsx3.speak("Welcome to my Calculator")
@@ -44,12 +46,12 @@ expression = ""
 input_text = StringVar()
 
 # frame for input field
-input_frame = Frame(shall, borderwidth='2', relief='solid')
-input_frame.place(x=0, y=0, width=320, height='40')
+input_frame = Frame(shall, borderwidth='2', relief=SOLID)
+input_frame.place(x=0, y=0, width=318, height=50)
 
 # input field inside frame
-input_field = Entry(input_frame, bg='#eee', font=('Arial', 17, 'bold'), textvariable=input_text ,justify='right')
-input_field.place(x=1, y=0, width='315', height=36)
+input_field = Entry(input_frame, font="Helvatica 20 bold", textvariable=input_text ,justify='right',borderwidth='5',background='#fa9191',relief=SUNKEN)
+input_field.place(x=1, y=0, width=315)
 
 # frame for Button
 btn_frame = Frame(shall, borderwidth=2, relief='solid')
@@ -84,8 +86,8 @@ five.place(x=80, y=100, width=75, height=45)
 six = Button(btn_frame, text='6', font=('Arial', 15), bg='#fff', command=lambda: btn_click(6))
 six.place(x=160, y=100, width=75, height=45)
 
-substrack = Button(btn_frame, text='-', font=('Arial', 17), bg='#fff', command=lambda: btn_click("-"))
-substrack.place(x=240, y=100, width=75, height=45)
+subtraction = Button(btn_frame, text='-', font=('Arial', 17), bg='#fff', command=lambda: btn_click("-"))
+subtraction.place(x=240, y=100, width=75, height=45)
 
 # forth row
 one = Button(btn_frame, text='1', font=('Arial', 15), bg='#fff', cursor='hand2', command=lambda: btn_click(1))

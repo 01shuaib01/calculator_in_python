@@ -1,6 +1,7 @@
 from tkinter import *
 import getpass
 import pyttsx3
+import re
 
 shall = Tk()
 shall.title('Calculator')
@@ -12,16 +13,40 @@ pyttsx3.speak("Welcome to my Calculator")
 pyttsx3.speak("Enter your password")
 inpass = getpass.getpass ("Enter your password :")
 apass = "shuaib"
+
 if inpass!=apass:
     pyttsx3.speak("Incorrect Password Try Again ")
     exit()
 pyttsx3.speak("Access Granted")
 
-# btn_click function continuously update the input field whatever you enter a number
+#btn_click function continuously update the input field whatever you enter a number
 def btn_click(item):
     global expression
-    expression = expression + str(item)
-    input_text.set(expression)
+    lastIndex = len(expression) - 1
+
+    # if operator is there and new operator comes then it replace with previous one
+    if(item in ['+', '-', '*', '/']):
+    
+        if(lastIndex >= 0 and expression[lastIndex] in ['+', '-', '*', '/']):
+            expression = expression[:-1] + item 
+        else:
+            expression = expression + str(item)
+    
+    # if dot is there and dot comes again then it's ignored
+    elif(item == '.'):
+        nArray = re.split(r'[\+\-\/\*]', expression)
+        
+        if('.' not in nArray[len(nArray) - 1]):
+            expression = expression + str(item)
+        else:
+            return
+
+    # for the numbers
+    else:
+        expression = expression + str(item)
+
+    # replace * and / by it's unicode sign
+    input_text.set(expression.replace('*', u'\u00D7').replace('/', u'\u00F7'))
 
 
 # 'btn_clear' function clears the input field
@@ -34,9 +59,20 @@ def btn_clear():
 # btn_equal calculation the expression present in input field
 def btn_equal():
     global expression
-    result = str(eval(expression))  # 'eval' function evaluate the string expression derectly
-    input_text.set(result)
-    expression = ""
+    
+    # if last val is operator in expression then ignore it
+    if(expression[len(expression) - 1] in ['+', '/', '*', '-']):
+        expression = expression[:-1]
+
+    # edd exception handling block
+    try:
+        result = str(eval(expression))  # 'eval' function evaluate the string expression derectly
+        input_text.set(result)
+    except Exception as e:
+        input_text("")
+        print(f"exception occured: {e.__cause__}")
+    finally:
+        expression = ""
 
 
 expression = ""
